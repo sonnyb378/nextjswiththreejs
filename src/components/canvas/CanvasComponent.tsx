@@ -19,7 +19,7 @@ function CanvasComponent({ children, showControls, ...props }: CanvasComponentPr
             <div style={ {position: 'fixed', top: '70px', right: '0px', zIndex: 1, transform: 'translate(0%, 0%)',} }> 
                 <Leva collapsed hidden={ showControls || false } />
             </div>
-            <Canvas {...props} shadows={ false } >
+            <Canvas {...props} shadows={ true } >
                 { children }
             </Canvas>
         </>
