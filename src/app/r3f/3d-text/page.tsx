@@ -1,5 +1,6 @@
 "use client"
 
+import SceneR3F3DText from "@/components/scenes/SceneR3F3DText";
 import Link from "next/link";
 
 
@@ -16,6 +17,8 @@ export default function ThreeDTextPage() {
                     </ul>
                 </div>
             </h1>
+
+            <SceneR3F3DText />
       </section>
     )
   }

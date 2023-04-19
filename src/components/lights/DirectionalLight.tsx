@@ -8,7 +8,7 @@ import { OrbitControls, useHelper } from "@react-three/drei";
 
 export default function DirectionalLight(props: ThreeElements['directionalLight']) {
     const directional = useRef<THREE.DirectionalLight>(null!)
-    useHelper(directional, THREE.DirectionalLightHelper, .5)    
+    // useHelper(directional, THREE.DirectionalLightHelper, .5)    
 
     return (
         <>
