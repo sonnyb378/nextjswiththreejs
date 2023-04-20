@@ -1,5 +1,6 @@
 "use client"
 
+import SceneR3FPortalScene from "@/components/scenes/SceneR3FPortalScene";
 import Link from "next/link";
 
 
@@ -16,6 +17,7 @@ export default function PortalScenePage() {
                     </ul>
                 </div>
             </h1>
+            <SceneR3FPortalScene />
       </section>
     )
   }
