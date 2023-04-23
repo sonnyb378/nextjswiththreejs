@@ -7,6 +7,7 @@ import * as THREE from 'three'
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import { ThreeEvent } from '@react-three/fiber'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -24,8 +25,13 @@ type GLTFResult = GLTF & {
 
 export default function HamburgerTransformed(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/models/hamburger-transformed.glb') as GLTFResult
+
+  const clickHandler= (event: ThreeEvent<MouseEvent>) => {
+    event.stopPropagation();
+  }
+
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} onClick={ clickHandler }>
       <mesh castShadow receiveShadow geometry={nodes.bottomBun.geometry} material={materials.BunMaterial} />
       <mesh castShadow receiveShadow geometry={nodes.meat.geometry} material={materials.SteakMaterial} position={[0, 2.82, 0]} />
       <mesh castShadow receiveShadow geometry={nodes.cheese.geometry} position={[0, 3.04, 0]} material={materials.CheeseMaterial} >

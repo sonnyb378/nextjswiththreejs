@@ -1,5 +1,6 @@
 "use client"
 
+import SceneR3FMouseEvents from "@/components/scenes/SceneR3FMouseEvents";
 import Link from "next/link";
 
 
@@ -16,6 +17,7 @@ export default function MouseEvents() {
                     </ul>
                 </div>
             </h1>
+            <SceneR3FMouseEvents />
       </section>
     )
   }
