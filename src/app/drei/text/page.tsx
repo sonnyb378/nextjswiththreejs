@@ -13,7 +13,7 @@ export default function TextPage() {
                     <ul>
                         <li><Link href="/">Home</Link></li> 
                         <li><Link href="/drei">Drei</Link></li> 
-                        <li>Text</li>
+                        <li className="text-orange-500">Text</li>
                     </ul>
                 </div>
             </h1>

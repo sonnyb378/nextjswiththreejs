@@ -1,23 +1,23 @@
 "use client"
 
-import SceneDreiMeshReflectorMaterial from "@/components/scenes/SceneDrei.MeshReflectorMaterial";
+import SceneR3FPostProcessing from "@/components/scenes/SceneR3FPostProcessing";
 import Link from "next/link";
 
 
-export default function MeshReflectorMaterialPage() {
+export default function AnimatedGalaxyPage() {
     return (
         <section id="parent-container" className="flex flex-col flex-1 flex-grow items-start justify-start w-full p-4 border-0 border-orange-500" style={{ height: "100%" }}>
             <h1>
-                ThreeJS Journey: Drei
+                ThreeJS Journey
                 <div className="text-sm breadcrumbs">
                     <ul>
                         <li><Link href="/">Home</Link></li> 
-                        <li><Link href="/drei">Drei</Link></li> 
-                        <li className="text-orange-500">MeshReflectorMaterial</li>
+                        <li><Link href="/r3f">R3F</Link></li> 
+                        <li><Link href="/r3f/shaders">Shaders</Link></li> 
+                        <li className='text-orange-500'>Animated Galaxy</li>
                     </ul>
                 </div>
             </h1>
-            <SceneDreiMeshReflectorMaterial />
       </section>
     )
   }

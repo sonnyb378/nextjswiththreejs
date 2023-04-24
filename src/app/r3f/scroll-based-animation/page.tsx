@@ -1,5 +1,6 @@
 "use client"
 
+import SceneR3FPostProcessing from "@/components/scenes/SceneR3FPostProcessing";
 import Link from "next/link";
 
 
@@ -12,7 +13,7 @@ export default function PostProcessingPage() {
                     <ul>
                         <li><Link href="/">Home</Link></li> 
                         <li><Link href="/r3f">R3F</Link></li> 
-                        <li className='text-orange-500'>Post Processing</li>
+                        <li className='text-orange-500'>Scroll Based Animation</li>
                     </ul>
                 </div>
             </h1>

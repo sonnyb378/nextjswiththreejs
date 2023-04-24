@@ -13,7 +13,7 @@ export default function DreiOverviewPage() {
                   <ul>
                       <li><Link href="/">Home</Link></li> 
                       <li><Link href="/drei">Drei</Link></li> 
-                      <li>Drei Overview</li>
+                      <li className="text-orange-500">Drei Overview</li>
                   </ul>
                 </div>
             </h1>

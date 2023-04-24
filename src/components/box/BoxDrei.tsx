@@ -19,7 +19,7 @@ const BoxDrei = ({ showTransformControls = false, children,  ...props }: BoxProp
     const [isLoaded, setIsLoaded] = useState(false)
     const meshRef = useRef<THREE.Mesh>(null!);
 
-    const hasChildren = React.Children.count(children) > 0;
+    // const hasChildren = React.Children.count(children) > 0;
 
     const boxClicked = (event: ThreeEvent<MouseEvent>) => {
         const material = meshRef.current.material as THREE.MeshStandardMaterial;
@@ -44,6 +44,7 @@ const BoxDrei = ({ showTransformControls = false, children,  ...props }: BoxProp
 
     return (
         <>
+
             <Box
                 {...props}  
                 args={[.5, .5, .5]}         

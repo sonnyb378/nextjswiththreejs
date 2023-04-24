@@ -2,7 +2,7 @@
 
 const nextConfig = {
   experimental: {
-    appDir: true,
+    appDir: true
   },
   swcMinify: true,
   webpack: (config) => {

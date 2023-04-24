@@ -13,7 +13,7 @@ export default function PivotControlsPage() {
                   <ul>
                       <li><Link href="/">Home</Link></li> 
                       <li><Link href="/drei">Drei</Link></li> 
-                      <li>Pivot Controls</li>
+                      <li className="text-orange-500">Pivot Controls</li>
                   </ul>
                 </div>
             </h1>

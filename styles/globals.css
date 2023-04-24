@@ -9,3 +9,9 @@ body {
   margin: 0;
   padding: 0;
 }
+
+#__next {
+  width: 100% !important;
+  height: 100% !important;
+  /* border: 5px solid white; */
+}

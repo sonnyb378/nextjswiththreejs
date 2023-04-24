@@ -13,7 +13,7 @@ export default function TransformControlsPage() {
                   <ul>
                       <li><Link href="/">Home</Link></li> 
                       <li><Link href="/drei">Drei</Link></li> 
-                      <li>Transform Controls</li>
+                      <li className="text-orange-500">Transform Controls</li>
                   </ul>
                 </div>
             </h1>

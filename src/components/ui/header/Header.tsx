@@ -23,7 +23,7 @@ function Header() {
                 </div>
                 <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-ghost rounded-btn">
-                        Topics
+                        Lessons
                         <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
                     </label>
                     <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4">
@@ -35,8 +35,10 @@ function Header() {
                         <li><Link href="/r3f/3d-text">3D Text</Link></li>
                         <li><Link href="/r3f/portal-scene">Portal Scene</Link></li>
                         <li><Link href="/r3f/mouse-events">Mouse Events</Link></li>
-                        <li><Link href="/r3f/post-processing">Post Processing</Link></li>
+                        <li><Link href="/postprocessing">Post Processing</Link></li>
                         <li><Link href="/r3f/physics">Physics</Link></li>
+                        <li><Link href="/r3f/scroll-based-animation">Scroll Based Animation</Link></li>
+                        <li><Link href="/r3f/shaders">Shaders</Link></li>
                     </ul>
                 </div>
                 <button className="btn"><Link href="/portfolio">Portfolio</Link></button>
