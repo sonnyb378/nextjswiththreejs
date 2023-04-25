@@ -17,12 +17,20 @@ import Portal from "@/components/models/Portal";
 import HamburgerDrei from "@/components/models/HamburgerDrei";
 import HamburgerTransformed from "@/components/models/HamburgerTransformed";
 
+import BoxPostProcessing from "@/components/box/BoxPostProcessing";
+import PlanePostProcessing from "@/components/plane/PlanePostProcessing";
+
+import { Effects } from "@/utils/Effects";
+import Drunk from "@/utils/Drunk";
 import { EffectComposer } from "@react-three/postprocessing";
+import * as PostProcessing from "postprocessing";
 
 const SceneR3FPostProcessing = () => {
 
     const [isShow, setIsShow] = useState(true);
     const [showControls, setShowControls] = useState(true);
+
+    const drunkRef = useRef()
 
     const { perfVisible } = useControls('r3F perf', {
         perfVisible: false
@@ -36,6 +44,11 @@ const SceneR3FPostProcessing = () => {
     const showControlsHandler = () => {
         setShowControls(!showControls)
     }
+
+    const drunkProps = useControls('Drunk Effects', {
+        frequency: { value: 2, min: 1, max: 20 }, 
+        amplitude: { value: 0.1, min: 0, max: 1 }        
+    })
     
     return (
 
@@ -58,9 +71,10 @@ const SceneR3FPostProcessing = () => {
                         <ol className='list-decimal ml-[8px] text-xs  w-full p-2 space-y-2 border-0 text-orange-500'>
                             <li className="text-yellow-500">We need two(2) dependencies
                                 <ul className="w-full text-xs space-y-2 mt-2 list-disc p-2 text-white">
-                                    <li>R3F implements it as @react-three/postprocessing</li>
-                                    <li>github.com/pmndrs/postprocessing</li>
-                                    <li className="list-none p-2">Only install @react-fiber/postprocessing as it will also install "postprocessing"
+                                    <li>R3F implements it as <span className="text-green-500">@react-three/postprocessing</span></li>
+                                    <li><span className="text-green-500">"postprocessing" - github.com/pmndrs/postprocessing</span></li>
+                                    <li>Documentation: https://github.com/pmndrs/postprocessing</li>
+                                    <li className="list-none p-2">
                                         <pre><code className="text-green-400 p-2">
                                         {`
 npm install @react-three/postprocessing
@@ -70,7 +84,7 @@ npm install @react-three/postprocessing
                                         <pre>
                                             <code className="text-green-400 p-2">{`
 <EffectComposer>
-    // add effect here
+    // add effects here
 </EffectComposer>                                            
                                             `}</code>
                                         </pre>
@@ -92,16 +106,303 @@ npm install @react-three/postprocessing
                             </li>  
                             <li>Effects
                                 <ul className="w-full text-xs space-y-2 mt-2 list-disc p-2 text-white">
-                                    <li>Documentation: https://github.com/pmndrs/postprocessing
+                                    <li><span className="text-yellow-500">Vignette</span> will make the corners of the render darker
                                         <pre>
                                             <code className="text-green-400 p-2">{`
 <EffectComposer>
-        
+    <Vignette offset={ 0.3 } darkness={ .9 } />        
 </EffectComposer>                                            
                                             `}</code>
-                                        </pre></li>
+                                        </pre>
+                                    </li> 
+                                    <li><span className="text-yellow-500">Glitch Effect</span> will make the screen glitch randomly
+                                        <pre>
+                                            <code className="text-green-400 p-2">{`
+<EffectComposer>
+    <Glitch
+        delay={ new THREE.Vector2(.5, 1) }
+        duration={ new THREE.Vector2(.1, 3) } 
+        strength={ new THREE.Vector2(.2, .4) } 
+        mode={ PostProcessing.GlitchMode.SPORADIC}
+    />       
+</EffectComposer>                                            
+                                            `}</code>
+                                        </pre>
+                                    </li>   
+                                    <li><span className="text-yellow-500">Noise Effect</span> adds a grain effect to the screen
+                                        <pre>
+                                            <code className="text-green-400 p-2">{`
+<EffectComposer>
+    <Noise 
+        blendFunction={ PostProcessing.BlendFunction.SOFT_LIGHT }
+        premultiply
+    />    
+</EffectComposer>                                            
+                                            `}</code>
+                                        </pre>
+                                    </li>
+                                    <li><span className="text-yellow-500">Bloom Effect</span> makes the object glow. Use mipmapBlue to increase the glow
+                                        <pre>
+                                            <code className="text-green-400 p-2">{`
+<EffectComposer>
+    <Bloom mipmapBlur />
+</EffectComposer>                                            
+                                            `}</code>
+                                        </pre>
+                                        <span className="block">You can change the brightness of the bloom by tweaking props in your material (eg: emissive, emissiveIntensity, etc)</span>
+                                        <pre>
+                                            <code className="text-green-400 p-2">{`
+<BoxPostProcessing position={[ 3.2, 2, 0]} scale={ 5 }>
+    <meshStandardMaterial 
+        color={ \`white\` }
+        toneMapped={false} 
+        emissive={\`orange\`}
+        emissiveIntensity={ 5 }
+    />
+</BoxPostProcessing>                                          
+                                            `}</code>
+                                        </pre>
+                                        <span className="block">To get a uniform emissive, use "meshBasicMaterial" instead of "meshStandardMaterial", 
+                                        but you will not be able to use "emissive" and "emissiveIntensity" but not good for performance if values get too high</span>
+                                        <pre>
+                                            <code className="text-green-400 p-2">{`
+<BoxPostProcessing position={[ 3.2, 2, 0]} scale={ 5 }>
+    <meshBasicMaterial 
+        color={ [1.5, 1, 4] }
+        toneMapped={false} 
+    />
+</BoxPostProcessing>                                          
+                                            `}</code>
+                                        </pre>
+                                    </li> 
+                                    <li><span className="text-yellow-500">DepthOfField effect</span> blur what's closer or farther from the set distance
+                                        <span className="block mt-2 text-yellow-400">3 main attributes</span>
+                                        <ul className="list-decimal p-2 ml-4">
+                                            <li><span className=" text-green-400">focusDistance</span> at which distance the image should be sharp (camera to x)
+                                                <pre className="p-2"><code>{`camera ------ x`}</code></pre>
+                                            </li>
+                                            <li><span className=" text-green-400">focalLength</span> the distance to travel from the focusDistance before reaching the maximum blur (x to y)
+                                                <pre className="p-2"><code>{`camera ------ x ------ y`}</code></pre>
+                                            </li>
+                                            <li><span className=" text-green-400">bokehScale</span> the blur radius (z)
+                                                <pre className="p-2"><code>{`camera ------ subject z------z x`}</code></pre>
+                                            </li>
+                                            <li>Values are normalised between 0 and 1</li>
+                                            <li>Will affect performance</li>
+                                        </ul>
+                                        <pre>
+                                            
+                                            <code className="text-green-400 p-2">{`
+<EffectComposer>
+    <DepthOfField 
+        focusDistance={ 0.025 }
+        focalLength={ 0.025 }
+        bokehScale={ 6 }
+    />      
+</EffectComposer>                                            
+                                            `}</code>
+                                        </pre>
+                                    </li>   
+                                    <li><span className="text-yellow-500">ScreenSpaceReflection (SSR) effect</span>
+                                        <ul className="list-decimal p-2 ml-4">
+                                            <li>{`<SSR />`} breaks in NextJS 13 (@react-three/postprocessing ver. 2.7.1)</li>
+                                            <li>Affects performance</li>
+                                        </ul>
+                                        <pre>                                            
+                                            <code className="text-green-400 p-2">{`
+import { EffectComposer, SSR } from "@react-three/postprocessing";
+
+<EffectComposer>
+    <SSR />
+</EffectComposer>                                            
+                                            `}</code>
+                                        </pre>
+                                    </li>   
+                                    <li><span className="text-yellow-500">Custom Effect</span>
+                                        <ul className="list-decimal p-2 ml-4">
+                                            <li>Create your custom effect (eg: DrunkEffect)
+                                                <pre>                                            
+                                                    <code className="text-green-400 p-2">{`
+import * as PostProcessing from "postprocessing"
+
+// webgl 2 syntax
+const fragmentShader = /* glsl */\`
+    void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) 
+    {
+        outputColor = inputColor;
+    }
+\`
+
+// DrunkEffect
+export default class DrunkEffect extends PostProcessing.Effect {
+    constructor() {
+        super(
+            'DrunkEffect', 
+            fragmentShader, 
+            {
+                
+            }
+        )
+    }
+
+}
+                                   
+                                            `}</code></pre>
+                                            </li>
+                                            <li>Create a component that will use the "DrunkEffect" class
+                                                <pre>                                            
+                                                    <code className="text-green-400 p-2">{`
+import DrunkEffect from "./DrunkEffect"
+
+export default function Drunk() {
+    
+    const effect = new DrunkEffect();
+
+    return (
+       <primitive object={ effect } />
+    )
+}                                                  
+                                                    `}</code>
+                                                </pre>
+                                            </li>
+                                            <li>In your scene, add the component (eg: Drunk component) inside the {`<EffectComposer>`}
+                                                <pre>                                            
+                                                    <code className="text-green-400 p-2">{`
+<EffectComposer>
+    <Drunk ref={ drunkRef } />
+</EffectComposer>                                                 
+                                                    `}</code>
+                                                </pre>
+                                            </li>
+                                            <li>Passing props to the Drunk component
+                                                <ul className="list-disc p-2">
+                                                    <li>Change the Drunk component to accept props <pre>                                           
+                                                        <code className="text-green-400 p-2">{`
+import DrunkEffect from "./DrunkEffect"
+import { forwardRef } from "react";
+
+export type DrunkProps = {
+    frequency?: number,
+    amplitude?: number
+}
+export default forwardRef(function Drunk(props: DrunkProps) {
+    
+    const effect = new DrunkEffect(props);
+
+    return (
+       <primitive object={ effect } />
+    )
+})                                               
+                                                        `}</code>
+                                                        </pre>
+                                                    </li>
+                                                    <li>Update DrunkEffect<pre>
+                                                        <code className="text-green-400">{`
+
+import { DrunkProps } from "./Drunk"
+import * as THREE from "three"
+
+// webgl 2 syntax
+const fragmentShader = /* glsl */\`
+    void mainUv(inout vec2 uv) {
+        uv.y += sin(uv.x * 10.0) * 0.1;
+    }
+
+    void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) 
+    {
+        vec4 color = inputColor;
+        color.rgb *= vec3(0.8, 1.0, 0.5);
+        outputColor = color;
+    }
+\`
+
+export default class DrunkEffect extends PostProcessing.Effect {
+    constructor(props: DrunkProps) {
+        const { amplitude, frequency } = props;
+        super(
+            'DrunkEffect', 
+            fragmentShader, 
+            {
+                uniforms: new Map([
+                    ['frequency', new THREE.Uniform(frequency) ],
+                    ['amplitude', new THREE.Uniform(amplitude) ]
+                ])                
+            }
+        )
+    }
+}
+                                                                
+                                                        `}</code></pre>
+                                                    </li>
+                                                    <li>Animating Custom Effect
+                                                        <ul className="list-decimal p-2">
+                                                            <li>Add an "offset" uniform in the fragmentShader
+                                                                <pre><code className="text-green-400 p-2">{`
+const fragmentShader = /* glsl */\`
+    ...
+    uniform float offset;
+
+    void mainUv(inout vec2 uv) {
+        uv.y += sin(uv.x * frequency + offset) * amplitude;
+    }
+
+    void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) 
+    {
+        ...
+    }
+\``}</code></pre>
+                                                            </li>
+                                                            <li>in the super() method, add "offset" to uniform property
+                                                                <pre><code className="text-green-400 p-2">{`
+super(
+    'DrunkEffect', 
+    fragmentShader, 
+    {
+        blendFunction: blendFunction ?  blendFunction : PostProcessing.BlendFunction.DARKEN,
+        uniforms: new Map([
+            ['frequency', new THREE.Uniform(frequency) ],
+            ['amplitude', new THREE.Uniform(amplitude) ],
+            ['offset', new THREE.Uniform(0) ]
+        ])
+    }
+)
+`}</code></pre>
+                                                            </li>
+                                                            <li>Add the update() method
+                                                                <pre><code className="text-green-400 p-2">{`
+update(renderer: THREE.WebGLRenderer, inputBuffer: THREE.WebGLRenderTarget, deltaTime: number): void {
+    this.uniforms.get('offset')!.value += deltaTime;
+}
+`}</code></pre>
+                                                            </li>
+                                                        </ul>
+                                                        
+                                                    </li>
+                                                </ul>
+                                                
+                                            </li>
+                                        </ul>   
+
+                                    </li>                               
                                 </ul>
-                            </li>                     
+                            </li>  
+                                 
+                            <li>blendFunction
+                                <span className="block mt-2 text-white">An attribute available for all effects</span>
+                                <pre>
+                                    <code className="text-green-400 p-2">{`
+import * as PostProcessing from "postprocessing"      
+
+<EffectComposer>
+    <Vignette 
+        offset={ 0.3 }
+        darkness={ .9 }
+        blendFunction={ PostProcessing.BlendFunction.NORMAL }
+    />
+</EffectComposer>
+                                    `}</code>
+                                </pre>
+                            </li>             
                         </ol>
                     </div>
 
@@ -135,13 +436,21 @@ npm install @react-three/postprocessing
                         flat={true}
                     >
                         
+
                         {
                             perfVisible && <Perf position="bottom-right" />
                         }
 
                         <color args={["#030202"]} attach="background" />
+                    
                         
-                        
+                        <EffectComposer>
+                            <Drunk
+                                ref={ drunkRef }
+                                { ...drunkProps }
+                                blendFunction={ PostProcessing.BlendFunction.COLOR_BURN }
+                            />
+                        </EffectComposer>
 
                         <PerspectiveCamera rotation={ [0, -.45, 0]} position={[0, 2, 0]}>   
                             <ambientLight intensity={0.5} />
@@ -162,26 +471,37 @@ npm install @react-three/postprocessing
                             >
                                 <meshStandardMaterial color={ `#e38100` } 
                             />
-                            </Sphere>   
+                            </Sphere>
 
-                            <EffectComposer>
-                                <BoxDrei position={[ 3.2, 2, 0]} scale={ 5 }>
-                                    <meshStandardMaterial color='hotpink' />
-                                </BoxDrei>
-                            </EffectComposer>
+                            <BoxPostProcessing position={[ 3.2, 2, 0]} scale={ 5 }>
+                                <meshStandardMaterial 
+                                    color={ 'mediumpurple' }
+                                    // toneMapped={false} 
+                                    // emissive={`orange`}
+                                    // emissiveIntensity={ 5 }
+                                />
+                            </BoxPostProcessing>
 
 
-                            <PlaneComponent 
+                            <PlanePostProcessing 
                                 scale={ 10 }
                                 position={[0, 0, 0]}
                                 rotation={[-Math.PI * .5, 0, 0]}
-                                receiveShadow
+                                // receiveShadow
                             >
-                                <meshStandardMaterial color={ "#ffff00" } side={ THREE.DoubleSide } />
-                            </PlaneComponent> 
+                                <meshStandardMaterial 
+                                    color={ "#c9e418" } 
+                                    roughness={ 0 }
+                                    metalness={ 0 }
+                                />
+                            </PlanePostProcessing> 
 
                             <OrbitControls makeDefault  />
                         </PerspectiveCamera>
+
+                        
+
+                        {/* <Effects /> */}
                     </CanvasComponent>
                
             </div>
