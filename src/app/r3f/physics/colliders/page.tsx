@@ -29,12 +29,9 @@ export default function CollidersPage() {
                     <li>
                         <ButtonNav link="/r3f/physics/colliders/roundcuboid" title="RoundCuboidCollider" />
                     </li>
-                    <li>
-                        <ButtonNav link="/r3f/physics/colliders/hull" title="HullCollider" />
-                    </li>
-                    <li>
+                    {/* <li>
                         <ButtonNav link="/r3f/physics/colliders/trimesh" title="TrimeshCollider" />
-                    </li>
+                    </li> */}
                     <li>
                         <ButtonNav link="/r3f/physics/colliders/capsule" title="CapsuleCollider" />
                     </li>
@@ -44,12 +41,12 @@ export default function CollidersPage() {
                     <li>
                         <ButtonNav link="/r3f/physics/colliders/cone" title="ConeCollider" />
                     </li>
-                    <li>
+                    {/* <li>
                         <ButtonNav link="/r3f/physics/colliders/convexhull" title="ConvexHullCollider" />
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                         <ButtonNav link="/r3f/physics/colliders/heightfield" title="HeightfieldCollider" />
-                    </li>
+                    </li> */}
                 
                 </ul>
           </nav>

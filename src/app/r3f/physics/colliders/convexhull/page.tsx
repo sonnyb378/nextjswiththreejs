@@ -1,5 +1,6 @@
 "use client"
 
+import SceneConvexHullCollider from "@/components/scenes/SceneConvexHullCollider";
 import SceneR3FPhysics from "@/components/scenes/SceneR3FPhysics";
 import ButtonNav from "@/components/ui/buttonnav/ButtonNav";
 import Link from "next/link";
@@ -19,7 +20,7 @@ export default function ConvexHullCollider() {
                     </ul>
                 </div>
             </h1>
-          
+          <SceneConvexHullCollider />
       </section>
     )
   }

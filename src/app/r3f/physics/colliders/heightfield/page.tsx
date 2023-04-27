@@ -1,5 +1,6 @@
 "use client"
 
+import SceneHeightfieldCollider from "@/components/scenes/SceneHeightfieldCollider";
 import SceneR3FPhysics from "@/components/scenes/SceneR3FPhysics";
 import ButtonNav from "@/components/ui/buttonnav/ButtonNav";
 import Link from "next/link";
@@ -19,7 +20,7 @@ export default function HeightfieldCollider() {
                     </ul>
                 </div>
             </h1>
-          
+            <SceneHeightfieldCollider />
       </section>
     )
   }

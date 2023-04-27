@@ -162,6 +162,7 @@ const SceneR3FPhysics = () => {
                                                     </li>
                                                 </ul>
                                             </li>
+                                            <li>To check more colliders, go to "Colliders Example" page</li>
                                         </ul>                                  
                                     </li>
                                 </ul>

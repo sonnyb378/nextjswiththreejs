@@ -1,6 +1,7 @@
 "use client"
 
 import SceneR3FPhysics from "@/components/scenes/SceneR3FPhysics";
+import SceneRoundCuboidCollider from "@/components/scenes/SceneRoundCuboidCollider";
 import ButtonNav from "@/components/ui/buttonnav/ButtonNav";
 import Link from "next/link";
 
@@ -19,7 +20,7 @@ export default function RoundCuboidCollider() {
                     </ul>
                 </div>
             </h1>
-          
+          <SceneRoundCuboidCollider />
       </section>
     )
   }
