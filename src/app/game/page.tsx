@@ -1,4 +1,5 @@
 
+import SceneR3FGame from "@/components/scenes/SceneR3FGame"
 import Link from "next/link"
 
 
@@ -17,7 +18,7 @@ export default function GamePage() {
                 </ul>
             </div>
         </h1>      
-        
+        <SceneR3FGame />
     </section>
   )
 }

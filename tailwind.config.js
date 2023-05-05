@@ -10,6 +10,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'Bebas': ['Bebas Neue', 'cursive'],
+      'Rampart': ['Rampart One', 'cursive'],
+    }
   },
   plugins: [require("daisyui"), require("tailwind-scrollbar")],
   variants: {
