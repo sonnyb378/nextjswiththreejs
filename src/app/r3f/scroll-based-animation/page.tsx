@@ -1,6 +1,7 @@
 "use client"
 
 import SceneR3FPostProcessing from "@/components/scenes/SceneR3FPostProcessing";
+import SceneR3FScrollBasedAnimation from "@/components/scenes/SceneR3FScrollBasedAnimation";
 import Link from "next/link";
 
 
@@ -17,6 +18,7 @@ export default function PostProcessingPage() {
                     </ul>
                 </div>
             </h1>
+            <SceneR3FScrollBasedAnimation />
       </section>
     )
   }
